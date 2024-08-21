@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation Form</title>
+</head>
+
+<style>
+    /* styles.css */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+}
+
+</style>
+<body>
+    <form id="contact-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Enter your name ">
+        <div class="error" id="name-error"></div>
+
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" placeholder="Enter your phone no. ">
+        <div class="error" id="phone-error"></div>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Enter your email ">
+        <div class="error" id="email-error"></div>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        // script.js
+const form = document.getElementById('contact-form');
+const nameInput = document.getElementById('name');
+const phoneInput = document.getElementById('phone');
+const emailInput = document.getElementById('email');
+
+form.addEventListener('submit', e => {
+    e.preventDefault();
+    validateForm();
+});
+
+function validateForm() {
+    const name = nameInput.value.trim();
+    const phone = phoneInput.value.trim();
+    const email = emailInput.value.trim();
+
+
+    // Validate name (non-empty)
+    if (name === '') {
+        showError('name', 'Name is required');
+    } else {
+        hideError('name');
+    }
+
+    // Validate phone (non-empty)
+    if (phone === '') {
+        showError('phone', 'Phone is required');
+    } else {
+        hideError('phone');
+    }
+
+    // Validate email (valid format)
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+        showError('email', 'Enter a valid email address');
+    } else {
+        hideError('email');
+    }
+}
+
+function showError(field, message) {
+    const errorContainer = document.getElementById(`${field}-error`);
+    errorContainer.textContent = message;
+}
+
+function hideError(field) {
+    const errorContainer = document.getElementById(`${field}-error`);
+    errorContainer.textContent = '';
+}
+
+    </script>
+</body>
+</html>
